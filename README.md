@@ -45,4 +45,6 @@ But i hope with the Above project an the different levels of coding needed, this
 - the Output board could be programmed to play directly from the USB Stick sequence, or to be a normal dimmer board
 - The LCD main brain, can be the heart/thinker for everything, directing what information goes where an what that information means
 - The {Serial+I2C} for the Output, USB & LCD. I was thinking the I2C could be like the control word or future instructions, while the serial communications could continue un-interupted
+- Reason for Seperate Arduino Mini Pro's, for the fader/joy an Buttons/pixels, was just incause your doing a nice fade of one thing, an you wanted to load another effect via the touch button pad
+- Reason for pixels under the buttons, 1, they look great, 2. different colour for different effects or rec/play back modes
  
