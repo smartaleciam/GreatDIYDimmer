@@ -21,6 +21,7 @@ Picture This "DMX Controller, Midi Controller, Pixel Controller, Live Pattern/se
 - {maybe E1.31 Out Ethernet}
 - {maybe Esp8266 Module for Remote control Via Phone}
 
+-= The following is a Discription of the Folders for the different Arduino Images =-
 
 - dimmer_colour_buttons = arduino mini pro {serial}, controlling 4x4 button matrix an rgb ws2811 pixel for each button
 - dimmer_sliders = arduino mini pro {serial}- using I2C to 4 ---- enabling 1 joystick an 2 fader sliders per ----
