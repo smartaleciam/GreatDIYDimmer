@@ -10,14 +10,14 @@ Picture This "DMX Controller, Midi Controller, Pixel Controller, Live Pattern/se
 USD Stick Storage,
 RFID Scanner,
 Onboard Clock.
-Mic Sensor
+Mic Sensor,
 
 On the Rear Panel,
 2x DMX In/Out,
 1x MIDI In/Out,
 2x Pixel Out (ws2811),
 
-maybe E1.31 Out Ethernet
+maybe E1.31 Out Ethernet,
 maybe Esp8266 Module for Remote control Via Phone
 
 - dimmer_colour_buttons = arduino mini pro {serial}, controlling 4x4 button matrix an rgb ws2811 pixel for each button
