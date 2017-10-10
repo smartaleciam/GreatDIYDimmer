@@ -41,10 +41,19 @@ I only have a basic level of arduino programming,
 
 But i hope with the Above project an the different levels of coding needed, this could turn out great
 
-- Faders, Joystick's, Buttons could be colour changers, whipe's, scene setups/playbacks, mainly due to the arduino mini pro sending its raw data to the main LCD Brain to interpret what that data should realy be used for
+- Faders, Joystick's, Buttons could be colour changers, wipe's, scene setups/playbacks, mainly due to the arduino mini pro sending its raw data to the main LCD Brain to interpret what that data should realy be used for
 - the Output board could be programmed to play directly from the USB Stick sequence, or to be a normal dimmer board
-- The LCD main brain, can be the heart/thinker for everything, directing what information goes where an what that information means
+- The Touch LCD -Main Brain-, can be the heart/thinker for everything, directing what information goes where an what that information means, via a touch screen panel, menu's for light settings,for sequences, for info off the usb, to programming everything to do different things when needed
 - The {Serial+I2C} for the Output, USB & LCD. I was thinking the I2C could be like the control word or future instructions, while the serial communications could continue un-interupted
 - Reason for Seperate Arduino Mini Pro's, for the fader/joy an Buttons/pixels, was just incause your doing a nice fade of one thing, an you wanted to load another effect via the touch button pad
 - Reason for pixels under the buttons, 1, they look great, 2. different colour for different effects or rec/play back modes
- 
+- RFID scanner - For Security, and to allow different people different levels of access an functions
+- Joysticks could control 4 or more Moving Head Lights, Setup for Moving head lights in Menu system an saved.
+- LCD to show a Picture of the Moving Head Light in Graphical Colour, while displaying its programmed X/Y Location
+- Programmed Dmx Channel output order, allowing different patchings for different things
+- Midi In/Out - to trigger sequences(midi in) or to control other Midi gear(midi out)
+- DMX Modules to include, DMX Snow/fog/Ice/Bubble Machines, dif MovingHead Lights, RGB, RGBW, X ch controllers (eg lor16, 27ch)
+- {maybe esp-wifi to trigger sequences or effects via phone_app}
+- {Be super great if it could use Xlights Sequences to play in it}
+- {E1.31 would be great, even better if it used the latest sync check}
+- RDM DMX is possable via hardware, just software is needed for it
