@@ -1,0 +1,22 @@
+- $  9.00 - 3.5" Touch LCD Display 
+- $ 10.00 - Arduino Mega's 2560
+
+- $  5.00 - 2x Arduino Mini Pro
+- $ 10.00 - 4x 16bit I2C ADS1115 Module
+- $ 18.00 - 10K Sliders
+- $  5.00 - 4x Joystick Module's
+
+- $  5.00 - pixel boards
+- $  2.50 - RGB leds for pixel boards
+- $ 32.00 - Button 4x4 silicon buttons and circuit board - Sparkfun
+
+- $  1.50 - USB extention Cable
+- $  4.00 - Arduino UNO
+- $  8.00 - USB Hub Host Shield
+
+- $ 10.00 - Arduino Mega's 2560
+- $  1.00 - Mic Sensor Module
+- $  3.00 - RFID Board Reader + Card
+- $  5.00 - 4x Buttons with Leds in
+
+Grand Total - = $  0.00 =-
