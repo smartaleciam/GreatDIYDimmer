@@ -18,5 +18,6 @@
 - $  1.00 - Mic Sensor Module
 - $  3.00 - RFID Board Reader + Card
 - $  5.00 - 4x Buttons with Leds in
+- $ 25.00 - 4x 16 Led NeoPixel Rings (around the Joysticks)
 
-Grand Total - = $ 129.00 =-
+Grand Total - = $ 154.00 =-
