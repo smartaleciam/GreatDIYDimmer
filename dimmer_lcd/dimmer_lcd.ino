@@ -1,6 +1,9 @@
-// Screen resolution of 480x320 pixels.
-// This program requires the UTFT library.
-//
+
+#include <SPI.h>        // RC522 Module uses SPI protocol
+#include <Ethernet.h>   // Ethernet Library Wiznet
+#include <MFRC522.h>  // Library for Mifare RC522 Devices
+#include <SD.h>         // We are going to read and write PICC's UIDs from/to SD
+
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <UTFTGLUE.h>
@@ -8,6 +11,18 @@ UTFTGLUE myGLCD(0x9488,A2,A1,A3,A4,A0);
 #include <MCUFRIEND_kbv.h>
 MCUFRIEND_kbv tft;       // hard-wired for UNO shields anyway.
 #include <TouchScreen.h>
+/*
+  We need to define MFRC522's pins and create instance
+  Pin layout should be as follows (on Arduino Uno):
+  MOSI: Pin 11 / ICSP-4
+  MISO: Pin 12 / ICSP-1
+  SCK : Pin 13 / ICSP-3
+  SDA : (Configurable)
+  RST : Not Needed
+ */
+#define SS_PIN 9
+#define RST_PIN 8
+MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance.
 
 #if defined(__SAM3X8E__)
 #undef __FlashStringHelper::F(string_literal)
@@ -35,7 +50,8 @@ byte x = 0;
 
 void setup()
 {
-  randomSeed(analogRead(5));   //.kbv Due does not like A0
+   Serial.begin(115200);  // Initialize serial communications with PC
+   randomSeed(analogRead(5));   //.kbv Due does not like A0
     pinMode(A0, OUTPUT);       //.kbv mcufriend have RD on A0
     digitalWrite(A0, HIGH);
   
@@ -47,30 +63,13 @@ void setup()
   myGLCD.InitLCD();
   myGLCD.setFont(SmallFont);
   myGLCD.clrScr();
+//rfid_startup();
 introscreen();
 }
 
-void introscreen()
-{
-  // Clear the screen and draw the frame
-  myGLCD.setColor(255,255,255);
-  myGLCD.fillRect(1,15,478,304);
-
-// Draw some lines in a pattern
-  myGLCD.setColor (255,0,0);
-  for (int i=15; i<304; i+=5)  {    myGLCD.drawLine(1, i, (i*1.6)-10, 304);  }
-  myGLCD.setColor (255,0,0);
-  for (int i=304; i>15; i-=5)  {    myGLCD.drawLine(478, i, (i*1.6)-11, 15);  }
-  myGLCD.setColor (0,255,255);
-  for (int i=304; i>15; i-=5)  {    myGLCD.drawLine(1, i, 491-(i*1.6), 15);  }
-  myGLCD.setColor (0,255,255);
-  for (int i=15; i<304; i+=5)  {    myGLCD.drawLine(478, i, 490-(i*1.6), 304);  }
-  delay (5000);  myGLCD.clrScr();
-  }
-
 void loop()
 {
-
+//loop1;
 
 }
 
