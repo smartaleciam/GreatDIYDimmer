@@ -84,7 +84,7 @@ static void scan()
         {
           Serial.print("Key Down ");
           Serial.println((current * NUM_BTN_ROWS) + j);
-  leds[(current * NUM_BTN_ROWS) + j] = CRGB::Red;
+  leds[(current * NUM_BTN_ROWS) + j] = CRGB::Blue;
   FastLED.show();
         }
       }
@@ -145,17 +145,16 @@ void setup()
       // FastLED.addLeds<TM1803, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<TM1804, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<TM1809, DATA_PIN, RGB>(leds, NUM_LEDS);
-       FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
-      // FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
+//  FastLED.addLeds<WS2811, DATA_PIN, RGB>(leds, NUM_LEDS);
+       FastLED.addLeds<WS2812, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<WS2812B, DATA_PIN, RGB>(leds, NUM_LEDS);
-  //FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
+      // FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
       // FastLED.addLeds<APA104, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<UCS1903, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<UCS1903B, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<GW6205, DATA_PIN, RGB>(leds, NUM_LEDS);
       // FastLED.addLeds<GW6205_400, DATA_PIN, RGB>(leds, NUM_LEDS);
-  for(uint8_t i = 0; i < NUM_LEDS; i++)
-  {  leds[i] = CRGB::White; } FastLED.show();
+//  for(uint8_t i = 0; i < NUM_LEDS; i++)  {  leds[i] = CRGB::Red; } FastLED.show();  // fill all leds red
 
 }
 
