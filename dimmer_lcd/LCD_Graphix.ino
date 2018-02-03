@@ -70,7 +70,10 @@ void recvJoysticks(int aw,int ax,int ay,int az,int bw,int bx,int by,int bz,int c
       myGLCD.setColor(0, 0, 0);  myGLCD.fillCircle((357+dw),(78+dx),3);
      //myGLCD.setColor(0, 0, 0);  myGLCD.fillCircle(15,15,10);
   }
-
+ void vu_meter(int a) {
+  
+ }
+ 
  void recvdimmer(int S1,int S2,int S3,int S4,int S5,int S6,int S7,int S8) {
       int xR=0,LoC=0;
       xR=S1;

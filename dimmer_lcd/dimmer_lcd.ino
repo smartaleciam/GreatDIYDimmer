@@ -11,6 +11,14 @@ int bootmode=1; // what mode to start up with at boot time
 UTFTGLUE myGLCD(0x9488,A2,A1,A3,A4,A0);
 //Adafruit_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 
+int mic=A6;
+int linein=A7;
+int sensorvalue=0,lastsensorvalue=0,lastminsensorvalue=1024,oldsensorvalue=0;
+int i;
+int led[]={22,24,26,28,30,32};
+int val;
+
+
 #include <MCUFRIEND_kbv.h>
 MCUFRIEND_kbv tft;       
 #include <TouchScreen.h>
@@ -136,34 +144,34 @@ Wire.onReceive(receiveI2C); // register event
 //introscreen();
 
   currentPage = '9'; RFID(); currentPage = rfidaccess;  //rfid - locks system till Correct RFID card is scanned  then loads in our access level  -- RFID
-  sdcard_startup();  // loads up sd card info
+//  sdcard_startup();  // loads up sd card info
 }
 
 void serialEvent(){ 
   if (Serial.available() > 0) {
   while (Serial.available()) {  
    char DataS=Serial.read();
-    if (bootmode==1) {  Serial3.write(DataS);  }   // Direct sliders to outputs
-    char inChar = DataS; inputString += inChar;    if (inChar == '\n') {      stringComplete = true;    }  }
-  }
+ //   if (bootmode==1) {  Serial3.write(DataS);  }   // Direct sliders to outputs
+    char inChar = DataS; inputString += inChar;    if (inChar == '\n') {      stringComplete = true;    } }
+}
 }
 
-void serial1Event(){
+void serialEvent1(){  // Slidders Input
   if (Serial1.available() > 0) {
-  while (Serial1.available()) {    char inChar = (char)Serial1.read();    inputString1 += inChar;    if (inChar == '\n') {      stringComplete1 = true;    }  }
-  }
+  while (Serial1.available()) {    char inChar1 = (char)Serial1.read();    inputString1 += inChar1;    if (inChar1 == '\n') {      stringComplete1 = true;    } }
+}
 }
 
-void serial2Event(){
+void serialEvent2(){  // Buttons Input
   if (Serial2.available() > 0) {
-  while (Serial2.available()) {    char inChar = (char)Serial2.read();    inputString2 += inChar;    if (inChar == '\n') {      stringComplete2 = true;    }  }
-  }
+  while (Serial2.available()) {    char inChar2 = (char)Serial2.read();    inputString2 += inChar2;    if (inChar2 == '\n') {      stringComplete2 = true;    } }
+} 
 }
 
-void serial3Event(){
+void serialEvent3(){  // Storage Input
   if (Serial3.available() > 0) {
-  while (Serial3.available()) {    char inChar = (char)Serial3.read();    inputString3 += inChar;    if (inChar == '\n') {      stringComplete3 = true;    }  }
-  }
+  while (Serial3.available()) {    char inChar3 = (char)Serial3.read();    inputString3 += inChar3;    if (inChar3 == '\n') {      stringComplete3 = true;    } }
+} 
 }
 
 void receiveI2C(int howMany) {
@@ -180,10 +188,13 @@ void loop()
 showtimer(1); //lcd graphics
 //Serial.println("test point 1 ");
 //Serial.println("test point 2 ");
-  if (stringComplete) {     Serial.println(inputString);    inputString = "";    stringComplete = false;  }
-  if (stringComplete1) {    Serial.println(inputString1);    inputString1 = "";    stringComplete1 = false;  }
-  if (stringComplete2) {    Serial.println(inputString2);    inputString2 = "";    stringComplete2 = false;  }
-  if (stringComplete3) {    Serial.println(inputString3);    inputString3 = "";    stringComplete3 = false;  }
+serialEvent1();
+serialEvent2();
+serialEvent3();
+if (stringComplete) {   Serial.print("Input USB- ");  Serial.println(inputString);    inputString = "";    stringComplete = false;  }
+  if (stringComplete1) {  Serial.print("Input Sliders- ");  Serial.println(inputString1);  if (inputString1=="Sliders_Ready") Serial1.print("RFID_FAIL");  inputString1 = "";    stringComplete1 = false;  }
+  if (stringComplete2) {  Serial.print("Input Buttons- ");  Serial.println(inputString2);  if (inputString2=="Buttons_Ready") Serial1.print("RFID_FAIL");  inputString2 = "";    stringComplete2 = false;  }
+  if (stringComplete3) {  Serial.print("Input Storage- ");  Serial.println(inputString3);  if (inputString3=="Storage_Ready") Serial1.print("RFID_FAIL");  inputString3 = "";    stringComplete3 = false;  }
   if (refresh==1) {
 menusel=bootmode;
     if (menusel==0) introscreen(); // - Main Menu - Lcd graphics
@@ -207,6 +218,8 @@ menusel=bootmode;
 //    if (p.z > MINPRESSURE && p.z < MAXPRESSURE) {     x=p.x;     y=p.y;
 //     Serial.print("x line : ");   Serial.print(p.x);   Serial.print(" : y line : ");   Serial.print(p.y);   Serial.print(" | Pressure line : ");   Serial.println(p.z);
 //   }
+
+//Beat_Detect(); //audio mic beat detection
 }
  // ENABLE_SOFTWARE_SPI_CLASS
 #else

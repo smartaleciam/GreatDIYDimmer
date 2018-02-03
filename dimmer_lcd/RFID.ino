@@ -60,14 +60,17 @@ void RFID () {
 }
 void rfid_access(int l){
      if (l==0) { // Access Denied
+        Serial1.println("RFID_FAIL");
         myGLCD.fillScreen(BLACK);  myGLCD.setBackColor(255,255,255);  // Sets the background color to black
         myGLCD.setColor(0, 255, 0);  myGLCD.fillCircle(15,15,10);
      } 
      if (l==1) { // Access Granted
-        myGLCD.fillScreen(BLACK);  myGLCD.setBackColor(255,255,255);  // Sets the background color to black
+        Serial1.println("RFID_PASS");
+         myGLCD.fillScreen(BLACK);  myGLCD.setBackColor(255,255,255);  // Sets the background color to black
         myGLCD.setColor(0, 0, 255);  myGLCD.fillCircle(15,15,10);
      } 
      if (l==2) { // Master Mode
+      Serial1.println("RFID_ADMIN");
         myGLCD.fillScreen(BLACK);  myGLCD.setBackColor(255,255,255);  // Sets the background color to black
         myGLCD.setColor(255, 0, 0);  myGLCD.fillCircle(15,15,10);
      } 
@@ -177,10 +180,11 @@ void checkMaster() {
 void ShowReaderDetails() {
   // Get the MFRC522 software version
   byte v = mfrc522.PCD_ReadRegister(mfrc522.VersionReg);
-  Serial.println();  Serial.print(F("RFID - MFRC522 Software Version: 0x"));  Serial.print(v, HEX); Serial.println(F(" = v2.0")); 
+  Serial.println(); Serial1.println("RFID_Fail");  Serial.print(F("RFID - MFRC522 Software Version: 0x"));  Serial.print(v, HEX); Serial.println(F(" = v2.0")); 
   // When 0x00 or 0xFF is returned, communication probably failed
   if ((v == 0x00) || (v == 0xFF)) {    Serial.println(F("Error: Communication failure to RFID Scanner!"));    while (true);   }
 }
+//Serial.println("RFID_FAIL");
 ///////////////////////////////////////// Check Bytes   ///////////////////////////////////
 boolean checkTwo ( byte a[], byte b[] ) {
   if ( a[0] != NULL )       // Make sure there is something in the array first
