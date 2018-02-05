@@ -65,9 +65,21 @@ your_sketchbook
  |
  +--libraries
  |   |
- |   +--
+ |   +--Adafruit_GFX_Library
+ |   |
+ |   +--Adafruit_TFTLCD
  |   |
  |   +--Adafruit_NeoPixel
+ |   |
+ |   +--MFRC522
+ |   |
+ |   +--MCUFRIEND_kbv
+ |   |
+ |   +--SdFat
+ |   |
+ |   +--UsbFat
+ |   |
+ |   +--Conceptinetics
  |
  +--
      |
