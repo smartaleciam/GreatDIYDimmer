@@ -64,10 +64,10 @@ void recvJoysticks(int aw_new,int ax_new,int ay_new,int az_new,int bw_new,int bx
       myGLCD.drawRoundRect(151,72,203,124); // JoyStick 2
       myGLCD.drawRoundRect(251,72,303,124); // JoyStick 3
       myGLCD.drawRoundRect(351,72,403,124); // JoyStick 4
-      myGLCD.setColor(255, 255, 255);  myGLCD.fillCircle((57+aw),(78+ax),3);
-      myGLCD.setColor(255, 255, 255);  myGLCD.fillCircle((157+bw),(78+bx),3);
-      myGLCD.setColor(255, 255, 255);  myGLCD.fillCircle((257+cw),(78+cx),3);
-      myGLCD.setColor(255, 255, 255);  myGLCD.fillCircle((357+dw),(78+dx),3);
+      myGLCD.setColor(0, 255, 255);  myGLCD.fillCircle((57+aw),(78+ax),3);
+      myGLCD.setColor(0, 255, 255);  myGLCD.fillCircle((157+bw),(78+bx),3);
+      myGLCD.setColor(0, 255, 255);  myGLCD.fillCircle((257+cw),(78+cx),3);
+      myGLCD.setColor(0, 255, 255);  myGLCD.fillCircle((357+dw),(78+dx),3);
 
       myGLCD.setColor(0, 0, 0);  myGLCD.fillCircle((57+aw_new),(78+ax_new),3);
       myGLCD.setColor(0, 0, 0);  myGLCD.fillCircle((157+bw_new),(78+bx_new),3);
