@@ -22,35 +22,49 @@ void introscreen1()
 }
 
 void ScanRFID() {
+      clk++;
       myGLCD.setBackColor(255,255,255); // Sets the background color to black
-      myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(4);   myGLCD.print("Scan RFID", LEFT, 100); // Prints the string on the screen
+      myGLCD.setColor(random(255), random(255), random(255)); myGLCD.setTextSize(4);   myGLCD.print("         ", 120, clk-1); myGLCD.print("Scan RFID", 120, clk); // Prints the string on the screen
+      if (clk==265) clk=1;
  }
+ 
+void footer_buttons_menu(String but1,String but2,String but3,String but4) {
+      myGLCD.setColor(255, 0, 0);  myGLCD.drawRect(5,290,475,316);  myGLCD.drawLine(122,290,122,316);  myGLCD.drawLine(240,290,240,316);  myGLCD.drawLine(358,290,358,316);  // Footer Button Menu Box
+      myGLCD.setColor(255, 255, 0); myGLCD.setTextSize(2); myGLCD.setBackColor(255,0,0);
+      myGLCD.print(but1, 10, 295); myGLCD.print(but2, 126, 295); myGLCD.print(but3, 245, 295); myGLCD.print(but4, 361, 295); // Prints the footer bar buttons
+      myGLCD.setBackColor(255,255,255); // Sets the background color to black
+}
 
 void menu() {
       myGLCD.setBackColor(255,255,255); // Sets the background color to black
-      myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("        Delux DMX Dimmer", LEFT, 10); // Prints the string on the screen
+      myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("Main Menu", 180, 8); // Prints the string on the screen
       myGLCD.setColor(255, 0, 0);    myGLCD.drawLine(25,32,440,32); // Header line
-      myGLCD.setColor(255, 0, 0);    myGLCD.fillRect(25,290,440,316); // Footer Button Menu Box
-      myGLCD.setColor(255, 255, 255); myGLCD.setTextSize(1); myGLCD.setBackColor(255,0,0);  myGLCD.print("Button No. 1  |  Button No. 2  |  Button No. 3  |  Button No. 4 ", CENTER, 300); // Prints the string on the screen
-      myGLCD.setBackColor(255,255,255); // Sets the background color to black
- }
-void slider_update() {
-      myGLCD.setBackColor(255,255,255); myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("Dimmer Monitor", 150, 40); // Prints the string on the screen
-      myGLCD.setColor(255, 0, 0);    myGLCD.drawLine(25,32,440,32); // Header line
-      myGLCD.setColor(255, 0, 0);    myGLCD.fillRect(25,290,440,316); // Footer Button Menu Box
-      myGLCD.setColor(255, 255, 255); myGLCD.setTextSize(1); myGLCD.setBackColor(255,0,0);  myGLCD.print("Button No. 1  |  Button No. 2  |  Button No. 3  |  Button No. 4 ", CENTER, 300); // Prints the footer bar buttons
-      myGLCD.setBackColor(255,255,255); // Sets the background color to black
+      footer_buttons_menu("Forward"," Select","  Enter","Backward");
 }
+void slider_update() {
+      myGLCD.setBackColor(255,255,255); myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("Dimmer Monitor", 150, 8); // Prints the string on the screen
+      myGLCD.setColor(255, 0, 0);    myGLCD.drawLine(25,32,440,32); // Header line
+      footer_buttons_menu("Button 1","Button 2","Button 3","Button 4");
+}
+void RFID_update() {
+      myGLCD.setBackColor(255,255,255); myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("RFID Card Updater", 120, 8); // Prints the string on the screen
+      myGLCD.setColor(255, 0, 0);    myGLCD.drawLine(25,32,440,32); // Header line
+myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("Please Scan the RFID Device", 60, 50);  myGLCD.print("You wish to Add/Remove", 80, 80); 
+      footer_buttons_menu("","","","  Reset  ");
+}
+
 void showtimer(int x) {
   DateTime now = RTC.now();
+  int tim; String pm;
   if (oldtime!=now.minute()) {  
-//    myGLCD.setBackColor(255,255,255); // Sets the background color to black
-    timer="Time "+String(now.hour())+":"+String(now.minute())+" ";
-    dater="Date "+String(now.day())+"/"+String(now.month())+"/"+String(now.year())+" ";
-    if (x==1) {  myGLCD.setTextSize(2);  myGLCD.setColor(0, 0, 255);  myGLCD.print(timer, 50, 5);  myGLCD.setColor(0, 0, 255);  myGLCD.print(dater, 240, 5);    }   // top of screen time display
-    if (x==2) {  myGLCD.setTextSize(3);  myGLCD.setColor(0, 0, 255);  myGLCD.print(timer, 5, 300);   myGLCD.setColor(0, 0, 255);  myGLCD.print(dater, 205, 300);    }   // rfid + time update display
+    myGLCD.setBackColor(255,255,255); // Sets the background color to black
+    if (now.hour() >= 13 ) {tim=now.hour()-12; pm="pm";} else {tim=now.hour(); pm="am";}
+    timer=String(tim)+":"+String(now.minute())+pm+" ";
+    dater=String(now.day())+"/"+String(now.month())+"/"+String(now.year())+" ";
+    if (x==1) {  myGLCD.setTextSize(2);  myGLCD.setColor(0, 0, 255);  myGLCD.print(timer, 40, 8);  myGLCD.setColor(0, 0, 255);  myGLCD.print(dater, 330, 8);    }   // top of screen time display
+    if (x==2) {  myGLCD.setTextSize(3);  myGLCD.setColor(0, 0, random(255));  myGLCD.print(timer, 25, 300);   myGLCD.setColor(random(255), 0, 255);  myGLCD.print(dater, 280, 300);    }   // rfid + time update display
 //    Serial.println(timer);
-//    Serial.println(dater);
+//    Serial.println(tim);
     oldtime=now.minute();
   }
 }
@@ -80,7 +94,7 @@ void vu_meter(int a) {
  }
  
  void recvdimmer(int S1,int S2,int S3,int S4,int S5,int S6,int S7,int S8) {
-     int xR=0,LoC=0;
+      int xR=0,LoC=0;
       xR=map(S1, 0, 255, 0, 110);
       if (xR!=S1old) {  myGLCD.setColor(255, 255, 255);  myGLCD.fillRect((40+LoC), (261-S1old+5), (65+LoC), (260-S1old)); S1old=xR; }
       myGLCD.setBackColor(0,0,0);  myGLCD.setColor(255, 255, 255); myGLCD.setTextSize(1);  myGLCD.print(" 001 ",38+LoC,273); myGLCD.setBackColor(255,255,255);
@@ -124,7 +138,15 @@ void vu_meter(int a) {
    refresh=0;
 }
     
- void introscreen() {
+void settingscreen() {
+      // Title
+      myGLCD.setBackColor(255,255,255); // Sets the background color to black
+      myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("        Settings", LEFT, 10); // Prints the string on the screen
+      myGLCD.setColor(255, 0, 0);    myGLCD.drawLine(25,32,440,32); // Header line
+      footer_buttons_menu("Button 1","Button 2","Button 3","Button 4");
+}
+
+void introscreen() {
       // Title
       myGLCD.setBackColor(255,255,255); // Sets the background color of the area where the text will be printed to black
       myGLCD.setColor(0, 0, 0); // Sets color to white
@@ -166,66 +188,6 @@ void vu_meter(int a) {
       myGLCD.print("Button 3", CENTER, 202);
       refresh=0;
   }
-
-void TOUCHED(int currentPage) { 
-  int y;
-   if (currentPage == 1) {
-// Serial.print("currentPage "); Serial.println(currentPage); 
-     TSPoint p = ts.getPoint();
-//   Serial.print("x line : ");   Serial.print(p.x);   Serial.print(" : y line : ");   Serial.print(p.y);   Serial.print(" | Pressure line : ");   Serial.println(p.z);
-    if (p.z > MINPRESSURE && p.z < MAXPRESSURE) {
-   x=p.x;
-   y=p.y;
-   Serial.print("x line : ");   Serial.print(p.x);   Serial.print(" : y line : ");   Serial.print(p.y);   Serial.print(" | Pressure line : ");   Serial.println(p.z);
-   // If we press the RGB LED Control Button 
-          if ((x>=35) && (x<=700) && (y>=500) && (y<=600)) {
-            drawFrame(35, 140, 285, 180);
- //           currentPage = '2';
-           // myGLCD.clrScr();
- //          myGLCD.fillScreen(BLACK); drawLedControl();
-         }
-    }
-  }
-      // RGB LED Control 
-  if (currentPage == 2) {
-//    setLedColor();
-       TSPoint p = ts.getPoint();
-    if (p.z > MINPRESSURE && p.z < MAXPRESSURE) {
-        x=p.x;
-        y=p.y;        
-         //Back button
-            if ((x>=10) && (x<=60) &&(y>=10) && (y<=36)) {
-              drawFrame(10, 10, 60, 36);
-              currentPage = '0';
-              myGLCD.fillScreen(BLACK); refresh=1; introscreen();
-           }
-        }
-   }
-    //==== This section of the code, for the game example, is explained in my next tutorial
-    TSPoint p = ts.getPoint();
-    if (p.z > MINPRESSURE && p.z < MAXPRESSURE) {
-        x=p.x;
-        y=p.y;        
-            if ((x>=10) && (x<=60) &&(y>=10) && (y<=36)) {
-              drawFrame(10, 10, 60, 36);
-              currentPage = '0';
-              myGLCD.fillScreen(BLACK);  refresh=1; introscreen();
-          }
-      }
-}
-
-    
-    // ====== Custom Funtions ======
-     void drawFrame(int x1, int y1, int x2, int y2) {
-      myGLCD.setColor(255, 0, 0);
-      myGLCD.drawRoundRect (x1, y1, x2, y2);
-     TSPoint p = ts.getPoint();
- //   while (p.z > MINPRESSURE && p.z < MAXPRESSURE)
-        x=p.x;
-        y=p.y;        
-        myGLCD.setColor(255, 255, 255);
-        myGLCD.drawRoundRect (x1, y1, x2, y2);
-    }
 
     //====================================================
  /*

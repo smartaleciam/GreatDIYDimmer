@@ -2,62 +2,54 @@
 // screen list of all users an there acess level  
 
 ///////////////////////////////////////// Main Loop ///////////////////////////////////
-void RFID () {
-//Serial.println("*****************RFID**********************************");  
+void RFID_LOOP() {
+  //Serial.println("*****************RFID**********************************");  
  if (RFIDPASS==0){
   do {
 //   checkClient();
-     ScanRFID(); // (LCD_Graphics)
-     showtimer(2);
+     ScanRFID(); // (LCD_Graphix)
+     showtimer(2); // (LCD_Graphix)
      
      successRead = getID();  // sets successRead to 1 when we get read from reader otherwise 0
      }
     while (!successRead);   // the program will not go further while you not get a successful read
   }
- 
+}
+
+void RFID() {
+ if (rfidaccess==0) RFID_LOOP();
  if (successRead==1 && RFIDPASS==0) {
-       if (programMode) {
-          if (isMaster(readCard)) {   // If master card scanned again exit program mode
-            Serial.println(F("Master Card Scanned"));
-            Serial.println(F("Exiting Program Mode"));
-            Serial.println(F("-----------------------------"));
-            rfidaccess=1;  rfid_access(rfidaccess);
-//            myGLCD.setColor(0, 0, 255);  myGLCD.fillCircle(15,15,10);
-            programMode = false;
-            return;
-          } else {
-          if ( findID() ) { // If scanned card is known delete it
-            Serial.println(F("I know this PICC, removing..."));
-            removeID();
-            Serial.println(F("-----------------------------"));
-            } else {            // If scanned card is not known add it
-            Serial.println(F("I do not know this PICC, adding..."));
-            writeID();
-            Serial.println(F("-----------------------------"));
-          }
+    if (programMode) { 
+      if (isMaster(readCard)) {   // If master card scanned again exit program mode
+        rfidaccess=1;  rfid_access(rfidaccess);
+        programMode = false;
+        return;
+      } else {
+      if ( findID() ) { // If scanned card is known delete it
+        myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("Device was Known... Now Deleted ", 50, 110);
+        removeID();
+        } else {            // If scanned card is not known add it
+        myGLCD.setColor(0, 0, 0); myGLCD.setTextSize(2);   myGLCD.print("Device NOT Known... Now Added   ", 50, 110);
+        writeID();
+        }
       }
-  } else {
+    } else {
     if (isMaster(readCard)) {   // If scanned card's ID matches Master Card's ID enter program mode
       programMode = true;
-      Serial.println(F("Hello Master - Entered Program Mode"));
-      Serial.println(F("Scan a PICC to ADD or REMOVE"));
-      Serial.println(F("-----------------------------"));
         rfidaccess=2; rfid_access(rfidaccess);
     } else {
       if (findID()) { // If not, check if we can find it
-        Serial.println(F("Welcome, You shall pass"));
-        Serial.println(F("Access Granted"));
         rfidaccess=1; rfid_access(rfidaccess);
         RFIDPASS=1;
       } else {      // If not, show that the ID was not valid
-        Serial.println(F("You shall not pass"));
-        Serial.println(F("Access Denied"));
-        rfidaccess=0; rfid_access(rfidaccess);
+        myGLCD.setColor(0, 255, 0); myGLCD.setTextSize(4);  myGLCD.print("RFID Denied", 100, clk);  delay(1000);// Prints the string on the screen
+        rfidaccess=0; rfid_access(rfidaccess);   showtimer(2);  RFID();
       }
     }
   }
+ }
 }
-}
+
 void rfid_access(int l){
      if (l==0) { // Access Denied
         Serial1.println("RFID_FAIL");
@@ -66,11 +58,11 @@ void rfid_access(int l){
      } 
      if (l==1) { // Access Granted
         Serial1.println("RFID_PASS");
-         myGLCD.fillScreen(BLACK);  myGLCD.setBackColor(255,255,255);  // Sets the background color to black
+        myGLCD.fillScreen(BLACK);  myGLCD.setBackColor(255,255,255);  // Sets the background color to black
         myGLCD.setColor(0, 0, 255);  myGLCD.fillCircle(15,15,10);
      } 
      if (l==2) { // Master Mode
-      Serial1.println("RFID_ADMIN");
+        Serial1.println("RFID_ADMIN");
         myGLCD.fillScreen(BLACK);  myGLCD.setBackColor(255,255,255);  // Sets the background color to black
         myGLCD.setColor(255, 0, 0);  myGLCD.fillCircle(15,15,10);
      } 
@@ -129,12 +121,13 @@ int getID() {
   // There are Mifare PICCs which have 4 byte or 7 byte UID care if you use 7 byte PICC
   // I think we should assume every PICC as they have 4 byte UID
   // Until we support 7 byte PICCs
-  Serial.println(F("Scanned PICC's UID:"));
+//  Serial.print(F("Scanned PICC's UID:"));
   for (int i = 0; i < 4; i++) {  //
     readCard[i] = mfrc522.uid.uidByte[i];
-     cardid=readCard[i];    Serial.print(readCard[i], HEX);
+     cardid=readCard[i]; 
+//     Serial.print(readCard[i], HEX);
   }
-  Serial.println("");
+//  Serial.println("");
   mfrc522.PICC_HaltA(); // Stop reading
   getFilename();    // Get data ready
   return 1;
@@ -142,14 +135,14 @@ int getID() {
 
 void checkMaster() {
   if (sd.exists("SYS/master.dat")) {              // Check if we have master.dat on SD card
-    Serial.print(F("Master Card's UID: "));      // Since we have it print to serial
+//    Serial.print(F("Master Card's UID: "));      // Since we have it print to serial
     File masterfile = sd.open("SYS/master.dat");  // Open file
     for (int i = 0; i < 4; i++) {             // Loop 4 times to get 4 bytes
       readCard[i] = masterfile.read();
-      Serial.print(readCard[i], HEX);         // Actual serial printing of each byte
+//      Serial.print(readCard[i], HEX);         // Actual serial printing of each byte
       masterCard[i] = readCard[i];            // Prepare bytes for future comparing
-    }
-    Serial.println("");
+     }
+//    Serial.println("");
     masterfile.close();                       // Close file
   }
   else {
@@ -176,15 +169,6 @@ void checkMaster() {
   }
 }
 
-
-void ShowReaderDetails() {
-  // Get the MFRC522 software version
-  byte v = mfrc522.PCD_ReadRegister(mfrc522.VersionReg);
-  Serial.println(); Serial1.println("RFID_FAIL");  Serial.print(F("RFID - MFRC522 Software Version: 0x"));  Serial.print(v, HEX); Serial.println(F(" = v2.0")); 
-  // When 0x00 or 0xFF is returned, communication probably failed
-  if ((v == 0x00) || (v == 0xFF)) {    Serial.println(F("Error: Communication failure to RFID Scanner!"));    while (true);   }
-}
-//Serial.println("RFID_FAIL");
 ///////////////////////////////////////// Check Bytes   ///////////////////////////////////
 boolean checkTwo ( byte a[], byte b[] ) {
   if ( a[0] != NULL )       // Make sure there is something in the array first

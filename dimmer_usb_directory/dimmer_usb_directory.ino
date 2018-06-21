@@ -12,7 +12,8 @@ void save_file() {     // Test file.
   file.open("test file.txt", O_CREAT | O_RDWR);
   file.println("Hello USB");
   file.close();
- }
+if (!file.open("SoftSPI.txt", O_CREAT | O_RDWR)) {    sd.errorHalt(F("open failed"));  }
+}
 
 //------------------------------------------------------------------------------
 void setup() {
@@ -48,7 +49,7 @@ void usb_scan() {
   float fs = 0.000512*volFree*key.vol()->blocksPerCluster();
   Serial.print(F("Free Space:  "));  Serial.print(fs);  Serial.println(F(" MB"));
   Serial.println(F("---------------------------------------------------------------------"));
-  key.ls(LS_A | LS_DATE | LS_SIZE);
+  key.ls(LS_A | LS_DATE | LS_SIZE | LS_R);
   Serial.println(F("---------------------------------------------------------------------\r\n"));
 
   Serial.println(F("Volume initialized."));
