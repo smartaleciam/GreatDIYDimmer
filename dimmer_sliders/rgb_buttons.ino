@@ -1,3 +1,8 @@
+
+void Button_Event(){ if (Serial2.available() > 0) {  while (Serial2.available()) {  char inChar2 = (char)Serial2.read(); inputString2 += inChar2;    if (inChar2 == '\n') {  stringComplete2 = true; 
+ inputString2.trim(); Serial.print("S-Pixels-");  Serial.println(inputString2);   inputString2 = "";    stringComplete2 = false; }  } } }
+
+
 // read the 4 buttons an control the red leds as needed, for screen control buttons etc
 
 static void setuppins()
@@ -54,5 +59,3 @@ static void scan()
   current++;
   if (current >= NUM_BTN_COLUMNS)  {   current = 0;   }
 }
-
-

@@ -1,6 +1,5 @@
 #include <FastLED.h>
-//#define LED_PIN 11    // on button pixel board
-#define LED_PIN 03    // on joystick pixel board
+#define LED_PIN 03    
 //#define NUM_LEDS 16   // on button pixel board
 #define NUM_LEDS 64   // on joystick pixel board
 #define Red_Pin 2     // on the background RGB led
@@ -46,7 +45,7 @@ Serial.begin(115200);  inputString.reserve(200);
 // This function scans the serial port an logs all the data.
 void serialEvent(){
   if (Serial.available() > 0) { 
-    inputString=""; 
+    inputString="";   RGB_Led(0,255,0);
     while (Serial.available()) {
       if (inputString == "L=") { inVal = (char)Serial.read();  inputValue += inVal; } // pixel number
       if (inputString == "B=") { inBright = (char)Serial.read();  inputBright += inBright; } // pixel brightness
@@ -65,7 +64,7 @@ void FillLEDsFromPaletteColors(uint8_t colorIndex)
 // There are several different palettes of colors demonstrated here.
 // FastLED provides several 'preset' palettes: RainbowColors_p, RainbowStripeColors_p, OceanColors_p, CloudColors_p, LavaColors_p, ForestColors_p, and PartyColors_p.
 // Additionally, you can manually define your own color palettes, or you can write code that creates color palettes on the fly.  All are shown here.
-void ChangePalettePeriodically(String P) {
+void Pattern(String P) {
     uint8_t secondHand = (millis() / 1000) % 60;
     static uint8_t lastSecond = 99;
     if( lastSecond != secondHand) {
@@ -143,15 +142,15 @@ void RGB_Led(int Re, int Gr, int Bl){
 void loop()
 {
     serialEvent();
-    if (stringComplete) {  inputString.trim(); 
+    if (stringComplete) {  inputString.trim();   RGB_Led(255,0,0);
       if (inputString=="L=") { Serial.println(inputValue); } else 
-      if (inputString=="B=") { BRIGHTNESS=inputBright.toInt(); } else 
-      if (inputString=="P=") { ChangePalettePeriodically(inputPat); } else 
+      if (inputString=="B=") { BRIGHTNESS=inputBright.toInt(); FastLED.setBrightness(BRIGHTNESS); } else 
+      if (inputString=="P=") { Pattern(inputPat);   RGB_Led(0,0,255); } else 
       if (inputString=="C=") { Command(inputCom); } else 
-      if (inputString=="RGB=") { Serial.println(inputRGB); } else 
+      if (inputString=="RGB=") { /* RGB_Led(inputRGB); */ } else 
       inputString += inChar;  
       stringComplete = false; }
-    ChangePalettePeriodically(inputPat);
+    Pattern(inputPat);
     static uint8_t startIndex = 0;  startIndex = startIndex + 1; /* motion speed */
     FillLEDsFromPaletteColors( startIndex);
     FastLED.show();
