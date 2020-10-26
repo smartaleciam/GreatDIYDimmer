@@ -86,7 +86,5 @@ your_sketchbook
      |
      +--
      +--
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 
-![Image of Front](https://GreatDIYDimmer.github.com/2020-10-26%2011.48.51.jpg)
-
+![Image](https://raw.githubusercontent.com/smartaleciam/GreatDIYDimmer/master/2020-10-26%2011.49.33.jpg)
