@@ -87,3 +87,4 @@ your_sketchbook
      +--
      +--
 ```
+![Image of Yaktocat](https://github.com/smartaleciam/GreatDIYDimmer/blob/master/2020-10-26%2011.48.51.jpg)
