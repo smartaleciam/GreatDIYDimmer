@@ -87,6 +87,6 @@ your_sketchbook
      +--
      +--
 
-![Front View](https://github.com/smartaleciam/GreatDIYDimmer/blob/master/2020-10-26%2011.48.51.jpg)
+![Image](Led_board_Front.jpg)
 
-![Inside View](https://github.com/smartaleciam/GreatDIYDimmer/blob/master/2020-10-26%2011.49.33.jpg)
+![Image](Led_board_Inside.jpg)
