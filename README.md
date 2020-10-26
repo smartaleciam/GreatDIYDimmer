@@ -86,10 +86,6 @@ your_sketchbook
      |
      +--
      +--
-Image of Frount
 
 ![Image of Frount](https://github.com/smartaleciam/GreatDIYDimmer/blob/master/2020-10-26%2011.48.51.jpg)
 
-Image of Inside
-
-![Image of Inside](https://github.com/smartaleciam/GreatDIYDimmer/blob/master/2020-10-26%2011.49.33.jpg)
